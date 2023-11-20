@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('city', 50);
             $table->string('province', 50);
             $table->string('owner_name', 50);
-            $table->string('contact', 15);
+            $table->string('contact', 20);
             $table->timestamps();
         });
     }

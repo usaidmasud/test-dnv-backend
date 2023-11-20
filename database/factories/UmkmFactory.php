@@ -17,7 +17,13 @@ class UmkmFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'name' => fake()->company(),
+            'description' => fake()->sentence(3),
+            'address' => fake()->address(),
+            'city' => fake()->state(),
+            'province' => fake()->city(),
+            'owner_name' => fake()->name(),
+            'contact' => fake()->phoneNumber(),
         ];
     }
 }
