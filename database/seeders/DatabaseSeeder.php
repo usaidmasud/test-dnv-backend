@@ -4,7 +4,10 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
+use App\Models\Product;
+use App\Models\ProductPhoto;
 use App\Models\Umkm;
+use App\Models\UmkmPhoto;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
@@ -26,6 +29,9 @@ class DatabaseSeeder extends Seeder
             'remember_token' => Str::random(10),
         ]);
 
-        Umkm::factory()->count(10)->create();
+        Umkm::factory()->count(10)
+            ->has(UmkmPhoto::factory()->count(3), 'photos')
+            ->has(Product::factory()->count(5)->has(ProductPhoto::factory()->count(3), 'photos'), 'products')
+            ->create();
     }
 }

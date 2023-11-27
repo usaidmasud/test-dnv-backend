@@ -37,7 +37,7 @@ class UmkmRequest extends FormRequest
             'province' => 'required|max:50',
             'owner_name' => 'required|max:50',
             'contact' => 'required|max:20|unique:umkms,contact',
-            'photos' => 'required|array|min:3'
+            'photos' => 'required|array'
         ];
     }
     private function update(): array
@@ -50,7 +50,7 @@ class UmkmRequest extends FormRequest
             'province' => 'required|max:50',
             'owner_name' => 'required|max:50',
             'contact' => 'required|unique:umkms,contact,' . $this->umkm,
-            'photos' => 'nullable|array|min:3'
+            'photos' => 'nullable|array'
         ];
     }
 }

@@ -2,7 +2,9 @@
 
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\FileController;
+use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\UmkmController;
+use App\Http\Controllers\PublicUmkmController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -26,6 +28,10 @@ Route::post('/auth/login', [AuthController::class, 'login']);
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/auth/profile', [AuthController::class, 'profile']);
-    Route::apiResource('umkm', UmkmController::class);
-    Route::post('file/upload', [FileController::class, 'upload']);
+    Route::apiResource('/umkm', UmkmController::class);
+    Route::apiResource('/product', ProductController::class);
+    Route::post('/file/upload', [FileController::class, 'upload']);
 });
+
+Route::apiResource('public/umkm', UmkmController::class)->only(['index','show']);
+Route::apiResource('public/product', ProductController::class)->only(['index','show']);

@@ -42,4 +42,16 @@ class Product extends Model
     {
         return $this->belongsTo(Umkm::class);
     }
+
+    /**
+     * Scope a query to only include search
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scope($query, $search)
+    {
+        return $query->where('name', 'LIKE', '%' . $search . '%')
+            ->orWhere('price', 'LIKE', '%' . $search . '%');
+    }
 }

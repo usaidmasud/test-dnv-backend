@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('umkm_id')->constrained('umkms')->onUpdate('CASCADE')->onDelete('CASCADE');
             $table->string('code', 10)->unique();
             $table->string('name', 50);
             $table->integer('price')->unsigned()->default(0);
