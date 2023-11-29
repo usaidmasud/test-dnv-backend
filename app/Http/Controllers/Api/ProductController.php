@@ -21,7 +21,7 @@ class ProductController extends Controller
     {
         $search = request()->search;
         $perPage = request()->per_page;
-        $items = Product::oldest()->with(['photos']);
+        $items = Product::oldest()->with(['photos', 'umkm', 'umkm.province', 'umkm.city']);
         if (!is_null($search)) {
             $items->search($search);
         }
@@ -65,7 +65,7 @@ class ProductController extends Controller
      */
     public function show(string $id)
     {
-        $find = Product::with(['photos'])->where('id', $id)->first();
+        $find = Product::with(['photos', 'umkm', 'umkm.province', 'umkm.city'])->where('id', $id)->first();
         if (is_null($find)) {
             return $this->responseNotFound();
         }

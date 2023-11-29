@@ -32,6 +32,8 @@ class ProductRequest extends FormRequest
         return [
             'code' => 'required|max:10|unique:products,code',
             'name' => 'required|max:50',
+            'description' => 'required|max:255',
+            'umkm_id' => 'required',
             'price' => 'required|integer|min:0',
             'photos' => 'required|array'
         ];
@@ -41,7 +43,9 @@ class ProductRequest extends FormRequest
         return [
             'code' => 'required|unique:products,code,' . $this->product,
             'name' => 'required|max:50',
+            'umkm_id' => 'required',
             'price' => 'required|integer|min:0',
+            'description' => 'required|max:255',
             'photos' => 'nullable|array'
         ];
     }

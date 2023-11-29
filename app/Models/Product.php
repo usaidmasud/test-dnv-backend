@@ -19,7 +19,9 @@ class Product extends Model
     protected $fillable = [
         'code',
         'name',
+        'umkm_id',
         'price',
+        'description',
     ];
 
 
@@ -49,7 +51,7 @@ class Product extends Model
      * @param  \Illuminate\Database\Eloquent\Builder $query
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scope($query, $search)
+    public function scopeSearch($query, $search)
     {
         return $query->where('name', 'LIKE', '%' . $search . '%')
             ->orWhere('price', 'LIKE', '%' . $search . '%');

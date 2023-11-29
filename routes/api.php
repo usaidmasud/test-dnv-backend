@@ -1,8 +1,10 @@
 <?php
 
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\CityController;
 use App\Http\Controllers\Api\FileController;
 use App\Http\Controllers\Api\ProductController;
+use App\Http\Controllers\Api\ProvinceController;
 use App\Http\Controllers\Api\UmkmController;
 use App\Http\Controllers\PublicUmkmController;
 use Illuminate\Http\Request;
@@ -33,5 +35,10 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/file/upload', [FileController::class, 'upload']);
 });
 
-Route::apiResource('public/umkm', UmkmController::class)->only(['index','show']);
-Route::apiResource('public/product', ProductController::class)->only(['index','show']);
+Route::apiResource('/province', ProvinceController::class)->only(['index', 'show']);
+Route::apiResource('/city', CityController::class)->only(['show']);
+
+Route::apiResource('public/umkm', UmkmController::class)->only(['index', 'show']);
+Route::get('public/umkm/product/{pid}', [UmkmController::class, 'showProduct']);
+
+Route::apiResource('public/product', ProductController::class)->only(['index', 'show']);

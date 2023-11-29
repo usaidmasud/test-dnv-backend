@@ -1,29 +1,21 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
-use App\Http\Resources\UmkmResource;
-use App\Models\Umkm;
+use App\Http\Controllers\Controller;
+use App\Http\Resources\CityResource;
+use App\Models\City;
 use Illuminate\Http\Request;
 
-class PublicUmkmController extends Controller
+class CityController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $search = request()->search;
-        $perPage = request()->per_page;
-        $items = Umkm::oldest()->with(['photos']);
-        if (!is_null($search)) {
-            $items->search($search);
-        }
-        if (!is_null($perPage)) {
-            return UmkmResource::collection($items->paginate($perPage));
-        } else {
-            return UmkmResource::collection($items->get());
-        }
+        $data = City::get();
+        return CityResource::collection($data);
     }
 
     /**
@@ -39,7 +31,8 @@ class PublicUmkmController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $data = City::where('province_id', $id)->get();
+        return CityResource::collection($data);
     }
 
     /**

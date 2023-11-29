@@ -11,14 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('umkms', function (Blueprint $table) {
+        Schema::create('cities', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('province_id')->constrained('provinces');
             $table->string('name', 100);
-            $table->string('description', 150);
-            $table->string('address', 150);
-            $table->string('owner_name', 50);
-            $table->string('contact', 20);
             $table->timestamps();
+        });
+
+        Schema::table('umkms', function (Blueprint $table) {
+            $table->foreignId('city_id')->constrained('cities');
         });
     }
 
@@ -27,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('umkms');
+        Schema::dropIfExists('cities');
     }
 };

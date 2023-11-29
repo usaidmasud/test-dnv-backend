@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Umkm extends Model
@@ -18,8 +19,8 @@ class Umkm extends Model
         'name',
         'description',
         'address',
-        'city',
-        'province',
+        'city_id',
+        'province_id',
         'owner_name',
         'contact',
     ];
@@ -57,4 +58,25 @@ class Umkm extends Model
             ->orWhere('address', 'LIKE', '%' . $search . '%')
             ->orWhere('owner_name', 'LIKE', '%' . $search . '%');
     }
+
+    /**
+     * Get the province that owns the Umkm
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function province(): BelongsTo
+    {
+        return $this->belongsTo(Province::class, 'province_id', 'id');
+    }
+
+    /**
+     * Get the city that owns the Umkm
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function city(): BelongsTo
+    {
+        return $this->belongsTo(City::class, 'city_id', 'id');
+    }
+
 }

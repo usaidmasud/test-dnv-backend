@@ -4,10 +4,13 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UmkmRequest;
+use App\Http\Resources\ProductResource;
 use App\Http\Resources\UmkmResource;
+use App\Models\Product;
 use App\Models\Umkm;
 use App\Models\UmkmPhoto;
 use App\Traits\ApiTrait;
+use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -21,7 +24,7 @@ class UmkmController extends Controller
     {
         $search = request()->search;
         $perPage = request()->per_page;
-        $items = Umkm::oldest()->with(['photos']);
+        $items = Umkm::oldest()->with(['photos', 'province', 'city']);
         if (!is_null($search)) {
             $items->search($search);
         }
@@ -46,8 +49,8 @@ class UmkmController extends Controller
                 "name" => $credentials['name'],
                 "description" => $credentials['description'],
                 "address" => $credentials['address'],
-                "city" => $credentials['city'],
-                "province" => $credentials['province'],
+                "city_id" => $credentials['city_id'],
+                "province_id" => $credentials['province_id'],
                 "owner_name" => $credentials['owner_name'],
                 "contact" => $credentials['contact'],
             ]);
@@ -73,7 +76,7 @@ class UmkmController extends Controller
      */
     public function show(string $id)
     {
-        $find = Umkm::with(['photos'])->where('id', $id)->first();
+        $find = Umkm::with(['photos', 'province', 'city'])->where('id', $id)->first();
         if (is_null($find)) {
             return $this->responseNotFound();
         }
@@ -121,6 +124,38 @@ class UmkmController extends Controller
         } catch (\Throwable $th) {
             DB::rollback();
             return $this->responseNotAccept($th->getMessage());
+        }
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function showProduct(string $id)
+    {
+        $search = request()->search;
+        $perPage = request()->per_page;
+        $items = Product::with(['photos', 'umkm'])->where('umkm_id', $id);
+        if (!is_null($perPage)) {
+            return ProductResource::collection($items->paginate($perPage));
+        } else {
+            return ProductResource::collection($items->get());
+        }
+    }
+    /**
+     * Display the specified resource.
+     */
+    public function similiarUmkm(string $id)
+    {
+        $search = request()->search;
+        $perPage = request()->per_page;
+        $items = Umkm::oldest()->with(['photos', 'province', 'city'])->where('id', '!=', $id);
+        if (!is_null($search)) {
+            $items->search($search);
+        }
+        if (!is_null($perPage)) {
+            return UmkmResource::collection($items->paginate($perPage));
+        } else {
+            return UmkmResource::collection($items->get());
         }
     }
 }

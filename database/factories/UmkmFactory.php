@@ -20,8 +20,8 @@ class UmkmFactory extends Factory
             'name' => fake()->company(),
             'description' => fake()->sentence(3),
             'address' => fake()->address(),
-            'city' => fake()->state(),
-            'province' => fake()->city(),
+            'city_id' => fake()->state(),
+            'province_id' => fake()->city(),
             'owner_name' => fake()->name(),
             'contact' => fake()->phoneNumber(),
         ];

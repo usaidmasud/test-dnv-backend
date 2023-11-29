@@ -33,8 +33,8 @@ class UmkmRequest extends FormRequest
             'name' => 'required|max:100',
             'description' => 'required|max:150',
             'address' => 'required|max:150',
-            'city' => 'required|max:50',
-            'province' => 'required|max:50',
+            'city_id' => 'required|max:50',
+            'province_id' => 'required|max:50',
             'owner_name' => 'required|max:50',
             'contact' => 'required|max:20|unique:umkms,contact',
             'photos' => 'required|array'
@@ -46,8 +46,8 @@ class UmkmRequest extends FormRequest
             'name' => 'required|max:100',
             'description' => 'required|max:150',
             'address' => 'required|max:150',
-            'city' => 'required|max:50',
-            'province' => 'required|max:50',
+            'city_id' => 'required|max:50',
+            'province_id' => 'required|max:50',
             'owner_name' => 'required|max:50',
             'contact' => 'required|unique:umkms,contact,' . $this->umkm,
             'photos' => 'nullable|array'
